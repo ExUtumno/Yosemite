@@ -1,0 +1,147 @@
+{
+  "name": "Yosemite Retirement Plan",
+  "renderer": "dda",
+  "voxelSizeMetres": 1,
+  "files": [
+    {
+      "path": ".nojekyll",
+      "bytes": 33
+    },
+    {
+      "path": "index.html",
+      "bytes": 1991
+    },
+    {
+      "path": "src/assets/vox2.png",
+      "bytes": 1615379
+    },
+    {
+      "path": "src/audio.js",
+      "bytes": 7275
+    },
+    {
+      "path": "src/blocks.js",
+      "bytes": 180
+    },
+    {
+      "path": "src/break-effects.js",
+      "bytes": 2426
+    },
+    {
+      "path": "src/caves.js",
+      "bytes": 9467
+    },
+    {
+      "path": "src/cloud-grid.js",
+      "bytes": 1843
+    },
+    {
+      "path": "src/coin-visuals.js",
+      "bytes": 5017
+    },
+    {
+      "path": "src/coins.js",
+      "bytes": 7898
+    },
+    {
+      "path": "src/dda-audit.js",
+      "bytes": 4801
+    },
+    {
+      "path": "src/dda-data.js",
+      "bytes": 6306
+    },
+    {
+      "path": "src/dda-edits.js",
+      "bytes": 4798
+    },
+    {
+      "path": "src/dda-renderer.js",
+      "bytes": 6265
+    },
+    {
+      "path": "src/dda-shader.js",
+      "bytes": 14023
+    },
+    {
+      "path": "src/forest.js",
+      "bytes": 3314
+    },
+    {
+      "path": "src/frame-performance.js",
+      "bytes": 2574
+    },
+    {
+      "path": "src/gpu-timer.js",
+      "bytes": 1105
+    },
+    {
+      "path": "src/grapple-visuals.js",
+      "bytes": 5760
+    },
+    {
+      "path": "src/grapple.js",
+      "bytes": 4132
+    },
+    {
+      "path": "src/look-input.js",
+      "bytes": 1148
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 16892
+    },
+    {
+      "path": "src/math.js",
+      "bytes": 1053
+    },
+    {
+      "path": "src/mining.js",
+      "bytes": 3265
+    },
+    {
+      "path": "src/player.js",
+      "bytes": 4780
+    },
+    {
+      "path": "src/sound-synthesis.js",
+      "bytes": 3666
+    },
+    {
+      "path": "src/style.css",
+      "bytes": 4029
+    },
+    {
+      "path": "src/teleport.js",
+      "bytes": 1868
+    },
+    {
+      "path": "src/terrain.js",
+      "bytes": 5413
+    },
+    {
+      "path": "src/views.js",
+      "bytes": 541
+    },
+    {
+      "path": "src/voxel-grid.js",
+      "bytes": 2678
+    },
+    {
+      "path": "src/weather.js",
+      "bytes": 1595
+    },
+    {
+      "path": "vendor/THREE-LICENSE.txt",
+      "bytes": 1081
+    },
+    {
+      "path": "vendor/three.core.js",
+      "bytes": 1403455
+    },
+    {
+      "path": "vendor/three.module.js",
+      "bytes": 603113
+    }
+  ]
+}

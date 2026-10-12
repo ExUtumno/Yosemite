@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#17261e"><title>Yosemite Retirement Plan</title><meta name="description" content="Yosemite Retirement Plan — explore alpine mountains and caves, dig through voxels, and collect gold."><link rel="icon" href="data:,"><link rel="preload" as="image" href="./src/assets/vox2.png"><link rel="stylesheet" href="./src/style.css"><script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script></head>
+<body>
+  <canvas id="world" tabindex="0" aria-label="Yosemite Retirement Plan. WASD to move, mouse to aim, Space to jump, hold C to crouch, T to teleport where you aim. Left-click to dig. Hold right-click to grapple to rock or trees; release to let go."></canvas>
+  <div id="crosshair" hidden aria-hidden="true"></div>
+  <div id="loading" role="status"><img id="loading-image" src="./src/assets/vox2.png" alt="" fetchpriority="high"><div class="loading-copy"><h1>Yosemite Retirement Plan</h1><p id="loading-label">Loading world…</p><p id="loading-detail">Building the landscape.</p><div class="loading-track"><i id="progress"></i></div><span id="percent">0%</span></div></div>
+  <div id="gold-hud" hidden aria-live="polite" aria-atomic="true"><i class="gold-icon" aria-hidden="true"></i><span><small>GOLD</small><strong id="gold-count">0</strong></span><span id="gold-pickup" aria-hidden="true">+1 gold</span></div>
+  <div id="fps-hud" hidden aria-label="Frames per second"><span id="fps-value">—</span> FPS</div>
+  <div id="controls-hint" hidden aria-label="Controls"><span><kbd aria-label="Arrow keys">↑↓←→</kbd> Move</span><span><kbd>Shift</kbd> Run</span><span><kbd>Space</kbd> Jump</span><span><kbd>Left click</kbd> Dig</span><span><kbd>Hold right click</kbd> Grapple</span><span><kbd>Hold C</kbd> Crouch</span></div>
+  <script type="module" src="./src/main.js"></script>
+</body></html>
