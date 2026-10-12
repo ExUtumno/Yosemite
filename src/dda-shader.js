@@ -144,18 +144,22 @@ vec3 blockColor(Hit hit,vec3 p,vec3 eye){
   else if(hit.type==6){factor=.975+variation*.05;shade=n.y<-.5?.91:1.;}
   if(hit.type==4||hit.type==5)shade*=n.y<-.5?.86:1.;
   vec3 hemisphere=mix(vec3(.23455,.21586,.14413),vec3(.55834,.68669,.83077),n.y*.5+.5)*1.4;
+  float distance=length(p-eye),caveDarkness=0.;
   if(hit.type!=6){
     ivec3 air=ivec3(floor(p+n*.01));
     if(all(greaterThanEqual(air.xz,ivec2(-1024,-1408)))&&all(lessThan(air.xz,ivec2(1024,640)))&&(columnAt(air.xz).y&256u)!=0u){
       int daylight=treeType(air,treeBrick(air));
-      if(daylight>=128)hemisphere*=.12+.88*pow(float(daylight-128)/31.,1.3);
+      if(daylight>=128){float sky=pow(float(daylight-128)/31.,1.3);hemisphere*=.12+.88*sky;caveDarkness=1.-sky;}
     }
   }
+  // A faint, short-range fill keeps nearby crawlway walls and grapple anchors
+  // readable while the unlit maze still disappears into darkness ahead.
+  hemisphere+=vec3(.42,.37,.29)*caveDarkness*max(0.,dot(n,(eye-p)/max(.01,distance)))/(1.+distance*.24+distance*distance*.07);
   float sun=max(0.,dot(n,sunDirection))*2.65;
   if(hit.type!=6&&sun>0.)sun*=shadowAt(p,n)*cloudLight(p);
   vec3 lit=color*factor*shade*(hemisphere+vec3(1.,.8796,.6867)*sun)/PI;
   if(hit.type==6)lit+=vec3(.53948,.56471,.59720)*.75;
-  float distance=length(p-eye),fog=1.-exp(-.00023*.00023*distance*distance);
+  float fog=1.-exp(-.00023*.00023*distance*distance);
   return mix(lit,vec3(.33716,.46778,.58408),fog);
 }
 vec3 shadeRay(Hit h,vec3 o,vec3 d){return h.type==0?skyColor(d):blockColor(h,o+d*h.t,o);}

@@ -117,7 +117,9 @@ export class GameAudio{
       let roof=false;
       for(let y=eye+1;y<=eye+28;y++){const type=terrain.grid.get(x,y,z);if(type>=1&&type<=3){roof=true;break;}}
       const air=terrain.grid.extra(x,eye,z),daylight=air>=128?clamp((air-128)/31,0,1):0;
-      this.outdoors=roof?Math.max(.04,daylight*.6):1;
+      // Stacked maze shafts can have their roof much farther overhead.
+      const underground=roof||air>=128&&daylight<.9&&eye<terrain.height(x,z);
+      this.outdoors=underground?Math.max(.04,daylight*.6):1;
       this.ramp(this.ambient.gain,this.outdoors,.7);
     }
     if(t>=this.birdAt){

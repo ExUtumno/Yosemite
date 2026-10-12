@@ -30,6 +30,9 @@ export function caveCoinSites(terrain,existing=[]){
     // another cache in the inner passage, with the same cell ownership checks.
     if(rewards.length-before<20){const path=cave.paths?.[0],point=path?.points[2];if(point)cluster(cave,...point,path.floor,3);}
   }
+  for(const chamber of terrain.maze?.chambers||[]){
+    const [x,z,floor]=chamber.bounds;cluster({id:`maze-${chamber.component}`},x,z,floor,2);
+  }
   return rewards;
 }
 

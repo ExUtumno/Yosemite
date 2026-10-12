@@ -17,9 +17,9 @@ import {Grapple} from './grapple.js';
 import {GrappleVisuals} from './grapple-visuals.js';
 import {GameAudio} from './audio.js';
 
-const $=s=>document.querySelector(s),canvas=$('#world'),crosshair=$('#crosshair'),keys=new Set(),params=new URLSearchParams(location.search);
-const shadowSize=Math.max(512,Math.min(4096,Number(params.get('shadow'))||2048));
-const framePerformance=new FramePerformance({adaptive:params.get('resolution')!=='native'});
+const $=s=>document.querySelector(s),canvas=$('#world'),crosshair=$('#crosshair'),keys=new Set();
+const shadowSize=2048;
+const framePerformance=new FramePerformance();
 const audio=new GameAudio();
 const loadingTimes=[];let loadStart=performance.now(),loadMark=loadStart;
 function markLoaded(stage){const now=performance.now();loadingTimes.push({stage,ms:now-loadMark});loadMark=now;}
@@ -35,14 +35,12 @@ function resize(){if(!renderer)return;camera.aspect=innerWidth/innerHeight;camer
 function setView(id){
   digHeld=false;
   if(!Number.isInteger(id)||id<1||id>4)throw new RangeError('View must be 1–4');view=id;walker.reset(VIEWS[id-1]);zoom=1;keys.clear();look.reset();resize();walker.apply(camera);
-  const url=new URL(location.href);url.searchParams.set('view',id);url.searchParams.delete('cave');history.replaceState({},'',url);
 }
 function setPhoto(on){photo=on;digHeld=false;if(on){grapple?.cancel();audio.setActive(false);}look.reset();document.body.classList.toggle('photo',on);if(on&&document.pointerLockElement)document.exitPointerLock();}
 function setCave(id){
   digHeld=false;
   const cave=terrain.caves.find(c=>c.id===id);if(!cave)throw new RangeError('Unknown cave');
   const [x,y,z]=cave.entrance;walker.reset({position:[x,z],elevation:y,yaw:cave.yaw,pitch:.08});keys.clear();look.reset();walker.apply(camera);
-  const url=new URL(location.href);url.searchParams.set('cave',id);history.replaceState({},'',url);
 }
 function pause(){paused=true;audio.setActive(false);digHeld=false;grapple?.cancel();keys.clear();look.reset();if(document.pointerLockElement)document.exitPointerLock();}
 function unlockAudio(){if(ready&&!photo&&!document.hidden)audio.unlock();}
@@ -189,13 +187,13 @@ async function init(){
     mining=new VoxelMining(terrain);breakEffects=new BlockBreakEffects(terrain);scene.add(breakEffects.mesh);
     coins=new GoldCoins(terrain,forest,VIEWS);scene.add(coins.group);updateGold();
     audio.prepare();
-    controls();setView(Math.max(1,Math.min(4,Number(params.get('view'))||2)));if(params.has('cave'))setCave(params.get('cave'));coins.update(walker.position,false);ready=true;
+    controls();setView(2);coins.update(walker.position,false);ready=true;
     markLoaded('Coins and controls');
     // Include the hidden launcher/cable materials so the first shot is smooth.
     await renderer.compileAsync(scene,camera);
     dda.update(renderer,camera,0);
     renderer.render(scene,camera);renderer.getContext().finish();markLoaded('First complete frame');loadMs=performance.now()-loadStart;
-    progress(1);$('#loading').remove();$('#gold-hud').hidden=false;$('#fps-hud').hidden=false;$('#controls-hint').hidden=false;crosshair.hidden=false;paused=false;canvas.focus({preventScroll:true});if(params.get('photo')==='1')setPhoto(true);
+    progress(1);$('#loading').remove();$('#gold-hud').hidden=false;$('#fps-hud').hidden=false;$('#controls-hint').hidden=false;crosshair.hidden=false;paused=false;canvas.focus({preventScroll:true});
     window.voxelSimulator={ready:true,goToView:setView,goToCave:setCave,inspectCaves:()=>terrain.caves,setPhoto,setTime:seconds=>{if(seconds!==null&&(!Number.isFinite(seconds)||seconds<0))throw new RangeError('Invalid time');environmentTime=seconds;},
       resetMetrics:()=>gpuTimer?.reset(),
       inspectWorldIdentity:async()=>{const {worldFingerprint}=await import('./dda-audit.js');return worldFingerprint(terrain,weather);},
@@ -206,6 +204,7 @@ async function init(){
       inspectDigging,
       inspectGrapple:()=>grapple.state(),
       inspectAudio:()=>audio.state(),
+      inspectMaze:()=>terrain.maze,
       getState:()=>({view,worldId:scene.uuid,position:walker.position.toArray(),cameraPosition:camera.position.toArray(),yaw:walker.yaw,pitch:walker.pitch,grounded:walker.grounded,crouched:walker.crouched,bodyHeight:walker.bodyHeight,distance:walker.distance,frames,coins:coins.getState(walker.position),voxelSize:1,terrainColumns:terrain.heights.length,treeCount:forest.count,treeVoxels:forest.voxelCount,cloudVoxels:weather.voxels,cloudTime:weather.lastTime,triangles:renderer.info.render.triangles,calls:renderer.info.render.calls})};
     last=performance.now();requestAnimationFrame(frame);
   }catch(error){console.error(error);$('#loading-label').textContent='Unable to build the landscape';$('#loading-detail').textContent=error.message;window.voxelSimulator={ready:false,error:error.message};}

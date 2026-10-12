@@ -17,7 +17,7 @@
     },
     {
       "path": "src/audio.js",
-      "bytes": 7275
+      "bytes": 7432
     },
     {
       "path": "src/blocks.js",
@@ -28,8 +28,12 @@
       "bytes": 2426
     },
     {
+      "path": "src/cave-maze.js",
+      "bytes": 7202
+    },
+    {
       "path": "src/caves.js",
-      "bytes": 9467
+      "bytes": 9557
     },
     {
       "path": "src/cloud-grid.js",
@@ -41,7 +45,7 @@
     },
     {
       "path": "src/coins.js",
-      "bytes": 7898
+      "bytes": 8046
     },
     {
       "path": "src/dda-audit.js",
@@ -61,7 +65,7 @@
     },
     {
       "path": "src/dda-shader.js",
-      "bytes": 14023
+      "bytes": 14367
     },
     {
       "path": "src/forest.js",
@@ -89,7 +93,7 @@
     },
     {
       "path": "src/main.js",
-      "bytes": 16892
+      "bytes": 16400
     },
     {
       "path": "src/math.js",
@@ -101,7 +105,7 @@
     },
     {
       "path": "src/player.js",
-      "bytes": 4780
+      "bytes": 4782
     },
     {
       "path": "src/sound-synthesis.js",

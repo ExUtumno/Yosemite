@@ -1,5 +1,6 @@
 import {noise,fbm,hash} from './math.js';
 import {CARVED_AIR} from './voxel-grid.js';
+import {generateCaveMaze} from './cave-maze.js';
 
 // Each path sweeps a rough, vaulted cross-section through actual metre cells.
 // Floors stay level along the main routes; chambers, ribs and side branches
@@ -120,6 +121,7 @@ export function generateCaves(terrain,world){
       for(let y=cave.entrance[1];y<Math.min(top,terrain.height(x,z));y++)grid.restore(x,y,z);
     }
   }
+  generateCaveMaze(terrain,world,carve);
   bakeCaveDaylight(terrain,columns,world);
   terrain.carvedVoxels=grid.count;
   terrain.caves=caves;

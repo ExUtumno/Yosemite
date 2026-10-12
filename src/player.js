@@ -10,7 +10,7 @@ export class Walker{
   constructor(terrain,forest){this.terrain=terrain;this.forest=forest;this.position=new THREE.Vector3();this.velocityX=0;this.velocityY=0;this.velocityZ=0;this.yaw=0;this.pitch=0;this.grounded=true;this.distance=0;this.crouched=false;this.bodyHeight=STANDING_HEIGHT;this.eye=1.7;this.cameraY=0;}
   reset(view){const [x,z]=view.position;this.grapple?.cancel();this.crouched=false;this.bodyHeight=STANDING_HEIGHT;this.eye=1.7;this.position.set(x+.5,view.elevation??this.floor(x+.5,z+.5),z+.5);this.yaw=view.yaw;this.pitch=view.pitch;this.velocityX=0;this.velocityY=0;this.velocityZ=0;this.grounded=this.collides(this.position.x,this.position.y-.002,this.position.z);this.cameraY=this.position.y+this.eye;}
   floor(x,z){return Math.max(WALK_ON_WATER?0:-Infinity,...[-.27,.27].flatMap(dx=>[-.27,.27].map(dz=>this.terrain.height(x+dx,z+dz))));}
-  look(dx,dy){this.yaw-=dx*.002;this.pitch=clamp(this.pitch-dy*.002,-1.4,1.4);}
+  look(dx,dy){this.yaw-=dx*.002;this.pitch=clamp(this.pitch-dy*.002,-1.55,1.55);}
   jump(){if(this.grounded){this.velocityY=6.6;this.grounded=false;}}
   collides(x,y,z,height=this.bodyHeight){
     for(let cz=Math.floor(z-RADIUS+EPS);cz<=Math.floor(z+RADIUS-EPS);cz++)for(let cx=Math.floor(x-RADIUS+EPS);cx<=Math.floor(x+RADIUS-EPS);cx++)for(let cy=Math.floor(y+EPS);cy<=Math.floor(y+height-EPS);cy++){
